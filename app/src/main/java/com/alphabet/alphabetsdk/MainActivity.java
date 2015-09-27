@@ -1,16 +1,42 @@
 package com.alphabet.alphabetsdk;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.alphabet.alphabetsdklib.uitls.CommonBaseAdapter;
+import com.alphabet.alphabetsdklib.uitls.ViewHolder;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends ListActivity {
+
+    private static List<ActivityBean> sActivityBeanList = new ArrayList<>();
+
+    static {
+        sActivityBeanList.add(new ActivityBean(CommonAdapterActivity.class, "万能适配器", "能大幅减少编写 adapter 的代码量"));
+    }
+
+    private CommonBaseAdapter<ActivityBean> mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mAdapter = new CommonBaseAdapter<ActivityBean>(this, sActivityBeanList, R.layout.common_adpter_item) {
+            @Override
+            public void convert(ViewHolder viewHolder, ActivityBean activityBean) {
+                viewHolder.setText(R.id.title_tv, activityBean.getTitle())
+                        .setText(R.id.content_tv, activityBean.getDesc());
+            }
+        };
+        setListAdapter(mAdapter);
     }
 
     @Override
@@ -33,5 +59,49 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private static class ActivityBean {
+        private String title;
+        private String desc;
+        private Class clazz;
+
+        public ActivityBean(Class clazz, String title, String desc) {
+            this.title = title;
+            this.desc = desc;
+            this.clazz = clazz;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+
+        public void setDesc(String desc) {
+            this.desc = desc;
+        }
+
+        public Class getClazz() {
+            return clazz;
+        }
+
+        public void setClazz(Class clazz) {
+            this.clazz = clazz;
+        }
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        ActivityBean bean = sActivityBeanList.get(position);
+        Intent intent = new Intent(this, bean.getClazz());
+        startActivity(intent);
     }
 }

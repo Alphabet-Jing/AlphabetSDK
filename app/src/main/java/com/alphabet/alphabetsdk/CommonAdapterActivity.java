@@ -85,7 +85,8 @@ public class CommonAdapterActivity extends ListActivity {
 
         @Override
         public void convert(ViewHolder viewHolder, Bean bean) {
-
+            viewHolder.setText(R.id.title_tv,bean.getTitle())
+                    .setText(R.id.content_tv,bean.getDesc());
         }
     }
 }

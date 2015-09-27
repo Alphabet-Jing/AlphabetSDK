@@ -55,26 +55,27 @@ public class ViewHolder {
     }
 
     public ViewHolder setText(int viewId, CharSequence text) {
-        TextView textView = (TextView) mViewSparseArray.get(viewId);
+        TextView textView = getView(viewId);
         textView.setText(text);
         return this;
     }
 
     public ViewHolder setText(int viewId, int resId) {
-        TextView textView = (TextView) mViewSparseArray.get(viewId);
+        TextView textView = getView(viewId);
         textView.setText(resId);
         return this;
     }
 
     public ViewHolder setViewVisibility(int viewId, int visibility) {
-        if (mViewSparseArray.get(viewId).getVisibility() == visibility) {
-            mViewSparseArray.get(viewId).setVisibility(visibility);
+        View view = getView(viewId);
+        if (view.getVisibility() == visibility) {
+            view.setVisibility(visibility);
         }
         return this;
     }
 
     public ViewHolder setImageResource(int viewId, int resId) {
-        ImageView imageView = (ImageView) mViewSparseArray.get(viewId);
+        ImageView imageView = getView(viewId);
         imageView.setImageResource(resId);
         return this;
     }

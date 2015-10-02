@@ -1,6 +1,7 @@
 package com.alphabet.alphabetsdklib.uitls;
 
 import android.content.Context;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +14,24 @@ import java.util.List;
  */
 public abstract class CommonBaseAdapter<T> extends BaseAdapter {
 
-    protected int mLayoutId;
     protected Context mContext;
     protected List<T> mDatas;
     protected LayoutInflater mLayoutInflater;
+    protected SparseArray<Integer> mLayoutIdSparseArray;
 
-    public CommonBaseAdapter(Context context, List<T> datas ,int layoutId) {
+    /**
+     *
+     * @param context
+     * @param datas
+     * @param layoutIds
+     */
+    public CommonBaseAdapter(Context context, List<T> datas ,int[] layoutIds) {
         mContext = context;
         mDatas = datas;
-        mLayoutId = layoutId;
+        mLayoutIdSparseArray = new SparseArray<Integer>();
+        for (int i = 0; i < layoutIds.length; i++) {
+            mLayoutIdSparseArray.put(i,layoutIds[0]);
+        }
         mLayoutInflater = LayoutInflater.from(mContext);
     }
 
@@ -42,10 +52,14 @@ public abstract class CommonBaseAdapter<T> extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-        ViewHolder viewHolder = ViewHolder.get(mContext,convertView,parent,mLayoutId,position);
-        convert(viewHolder,getItem(position));
+        ViewHolder viewHolder = ViewHolder.get(mContext,
+                convertView,
+                parent,
+                mLayoutIdSparseArray.get(getItemViewType(position)),
+                position);
+        convert(viewHolder,getItemViewType(position),getItem(position));
         return viewHolder.getConvertView();
     }
 
-    public abstract void convert(ViewHolder viewHolder,T t);
+    public abstract void convert(ViewHolder viewHolder,int type,T t);
 }

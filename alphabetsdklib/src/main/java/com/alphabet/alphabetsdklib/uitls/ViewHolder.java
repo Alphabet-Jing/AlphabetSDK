@@ -16,7 +16,6 @@ import android.widget.TextView;
 public class ViewHolder {
 
     private SparseArray<View> mViewSparseArray;
-    private SparseArray<Integer> mLayoutIdSparseArray;
     private View mConvertView;
     private int mPosition;
 

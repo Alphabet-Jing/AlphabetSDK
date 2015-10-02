@@ -1,4 +1,4 @@
-package com.alphabet.alphabetsdklib.uitls;
+package com.mymoney.ui.widget.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -22,7 +22,7 @@ public class ViewHolder {
     public ViewHolder(Context context, ViewGroup parent, int layoutId, int position) {
         mPosition = position;
         mConvertView = LayoutInflater.from(context).inflate(layoutId, parent, false);
-        mViewSparseArray = new SparseArray<>();
+        mViewSparseArray = new SparseArray<View>();
 
         mConvertView.setTag(this);
     }
@@ -54,6 +54,12 @@ public class ViewHolder {
         return (T) view;
     }
 
+    public ViewHolder setTextColor(int viewId,int color){
+        TextView textView = getView(viewId);
+        textView.setTextColor(color);
+        return this;
+    }
+
     public ViewHolder setText(int viewId, CharSequence text) {
         TextView textView = getView(viewId);
         textView.setText(text);
@@ -68,7 +74,7 @@ public class ViewHolder {
 
     public ViewHolder setViewVisibility(int viewId, int visibility) {
         View view = getView(viewId);
-        if (view.getVisibility() == visibility) {
+        if (view.getVisibility() != visibility) {
             view.setVisibility(visibility);
         }
         return this;
@@ -89,6 +95,18 @@ public class ViewHolder {
     public ViewHolder setImageDrawable(int viewId, Drawable drawable) {
         ImageView imageView = (ImageView) mViewSparseArray.get(viewId);
         imageView.setImageDrawable(drawable);
+        return this;
+    }
+
+    public ViewHolder setViewOnClickListener(int viewId,View.OnClickListener onClickListener){
+        View view = getView(viewId);
+        view.setOnClickListener(onClickListener);
+        return this;
+    }
+
+    public ViewHolder setViewOnTouchListener(int viewId,View.OnTouchListener onTouchListener){
+        View view = getView(viewId);
+        view.setOnTouchListener(onTouchListener);
         return this;
     }
 }

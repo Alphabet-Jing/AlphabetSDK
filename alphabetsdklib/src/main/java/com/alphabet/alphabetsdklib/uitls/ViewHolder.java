@@ -1,4 +1,4 @@
-package com.mymoney.ui.widget.adapter;
+package com.alphabet.alphabetsdklib.uitls;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -16,6 +16,7 @@ import android.widget.TextView;
 public class ViewHolder {
 
     private SparseArray<View> mViewSparseArray;
+    private SparseArray<Integer> mLayoutIdSparseArray;
     private View mConvertView;
     private int mPosition;
 
@@ -23,7 +24,6 @@ public class ViewHolder {
         mPosition = position;
         mConvertView = LayoutInflater.from(context).inflate(layoutId, parent, false);
         mViewSparseArray = new SparseArray<View>();
-
         mConvertView.setTag(this);
     }
 

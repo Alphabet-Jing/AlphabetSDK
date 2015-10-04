@@ -29,9 +29,9 @@ public class MainActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mAdapter = new CommonBaseAdapter<ActivityBean>(this, sActivityBeanList, R.layout.common_adpter_item) {
+        mAdapter = new CommonBaseAdapter<ActivityBean>(this, sActivityBeanList, new int[]{R.layout.common_adpter_item}) {
             @Override
-            public void convert(ViewHolder viewHolder, ActivityBean activityBean) {
+            public void convert(ViewHolder viewHolder, int type,ActivityBean activityBean) {
                 viewHolder.setText(R.id.title_tv, activityBean.getTitle())
                         .setText(R.id.content_tv, activityBean.getDesc());
             }

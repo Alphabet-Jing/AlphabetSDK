@@ -25,11 +25,11 @@ public class CommonAdapterActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_common_adater);
 
-        for (int i = 0 ; i < 20 ; i++){
-            mBeanList.add(new Bean("Title_"+i,"Desc_"+i));
+        for (int i = 0; i < 20; i++) {
+            mBeanList.add(new Bean("Title_" + i, "Desc_" + i));
         }
 
-        mMyAdapter = new MyAdapter(this,mBeanList,R.layout.common_adpter_item);
+        mMyAdapter = new MyAdapter(this, mBeanList, new int[]{R.layout.common_adpter_item});
         setListAdapter(mMyAdapter);
         setListAdapter(mMyAdapter);
     }
@@ -51,7 +51,7 @@ public class CommonAdapterActivity extends ListActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    static class Bean{
+    static class Bean {
         private String title;
         private String desc;
 
@@ -77,16 +77,23 @@ public class CommonAdapterActivity extends ListActivity {
         }
     }
 
-    static class MyAdapter extends CommonBaseAdapter<Bean>{
+    static class MyAdapter extends CommonBaseAdapter<Bean> {
 
-        public MyAdapter(Context context, List<Bean> datas, int layoutId) {
-            super(context, datas, layoutId);
+
+        /**
+         * @param context
+         * @param datas
+         * @param layoutIds
+         */
+        public MyAdapter(Context context, List<Bean> datas, int[] layoutIds) {
+            super(context, datas, layoutIds);
         }
 
         @Override
-        public void convert(ViewHolder viewHolder, Bean bean) {
-            viewHolder.setText(R.id.title_tv,bean.getTitle())
-                    .setText(R.id.content_tv,bean.getDesc());
+        public void convert(ViewHolder viewHolder, int type, Bean bean) {
+            viewHolder.setText(R.id.title_tv, bean.title)
+                    .setText(R.id.content_tv, bean.desc);
+
         }
     }
 }
